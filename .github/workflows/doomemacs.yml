@@ -25,7 +25,7 @@ jobs:
       - name: Clone doom emacs and install
         run: |
           git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
-          yes yes | ~/.config/emacs/bin/doom install
+          yes | ~/.config/emacs/bin/doom install
       - name: Show current dir and home 
         run: |
           ls -lart
