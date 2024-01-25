@@ -29,4 +29,29 @@ jobs:
       - name: Show current dir and home 
         run: |
           ls -lart
-          ls -lart ~
+          ls -lart ~/.config
+          ls -lart ~/.config/emacs
+          ls -lart ~/.config/doom
+      - name: Download doom folder configs from dotfiles repository 
+        run: curl https://codeload.github.com/notarock/dotfiles/tar.gz/macos | tar -xz --strip=2 dotfiles-macos/notarock/doom.d
+      - name: Place downloaded folder in ~/.config 
+        run: rm -rf ~/.config/doom && mv doom.d ~/.config/doom
+      - name: Doom sync with personnal config 
+        run: ~/.config/emacs/bin/doom sync
+      - name: Compress emacs and doom config to upload as artifact
+        run: |
+          cp -r ~/.config/emacs ./emacs
+          cp -r ~/.config/doom ./doom
+          tar -czvf doomemacs-config.tar.gz ./emacs ./doom
+      - name: Upload doomemacs config
+        uses: actions/upload-artifact@v4
+        with:
+          name: doomemacs-config
+          path: doomemacs-config.tar.gz
+
+
+        
+
+
+
+
